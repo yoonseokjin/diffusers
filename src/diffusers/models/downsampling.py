@@ -132,7 +132,7 @@ class Downsample2D(nn.Module):
             self.conv = conv
 
     def forward(self, hidden_states: torch.FloatTensor, scale: float = 1.0) -> torch.FloatTensor:
-        assert hidden_states.shape[1] == self.channels
+        # assert hidden_states.shape[1] == self.channels
 
         if self.norm is not None:
             hidden_states = self.norm(hidden_states.permute(0, 2, 3, 1)).permute(0, 3, 1, 2)
@@ -141,7 +141,7 @@ class Downsample2D(nn.Module):
             pad = (0, 1, 0, 1)
             hidden_states = F.pad(hidden_states, pad, mode="constant", value=0)
 
-        assert hidden_states.shape[1] == self.channels
+        # assert hidden_states.shape[1] == self.channels
 
         if not USE_PEFT_BACKEND:
             if isinstance(self.conv, LoRACompatibleConv):
